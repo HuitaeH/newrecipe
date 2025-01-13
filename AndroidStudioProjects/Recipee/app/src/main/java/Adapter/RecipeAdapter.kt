@@ -4,30 +4,40 @@ import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipee.R
+import com.example.recipee.RecipeDetailFragment
 import datas.Recipe
 import com.example.recipee.databinding.ItemRecipeBinding
 
 class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     private val recipes = mutableListOf<Recipe>()
 
+
     inner class RecipeViewHolder(private val binding: ItemRecipeBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                // Fragment Transaction으로 상세 화면으로 이동
+                val fragment = RecipeDetailFragment()
+                val transaction = (itemView.context as AppCompatActivity)
+                    .supportFragmentManager.beginTransaction()
+
+                transaction.replace(R.id.fragment_container, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+        }
 
         fun bind(recipe: Recipe) {
             with(binding) {
-                recipeTitle.apply {
-                    text = recipe.title
-                    setTextColor(Color.parseColor("#1F1717"))  // 여기에 색상 설정 추가
-                }
+                recipeTitle.text = recipe.title
                 recipeBadge.text = recipe.badge
                 recipeTime.text = "${recipe.cookingTime} min"
-                authorName.apply {
-                    text = recipe.authorName
-                    setTextColor(Color.parseColor("#1F1717"))  // 여기에 색상 설정 추가
+                authorName.text = recipe.authorName
+                // Glide를 통해 이미지 로드 등
 
-                }
 
                 // 이미지 로딩은 Glide 또는 Coil 라이브러리 사용 필요
                 // Glide.with(itemView).load(recipe.imageUrl).into(recipeImage)
