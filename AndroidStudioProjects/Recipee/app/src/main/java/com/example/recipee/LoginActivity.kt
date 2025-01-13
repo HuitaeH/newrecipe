@@ -8,15 +8,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.FirebaseApp
+
 
 class LoginActivity : AppCompatActivity() {
+
 
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
-
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this)
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 

@@ -16,6 +16,13 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
+        // 앱 시작 시 HomeFragment를 기본으로 표시
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, HomeFragment())
+                .commit()
+        }
+
         // 네비게이션 아이콘 색상 설정
         bottomNavigation.itemIconTintList = ColorStateList(
             arrayOf(

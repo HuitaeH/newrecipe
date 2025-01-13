@@ -34,6 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true    // 이 부분 추가
+    }
 }
 
 dependencies {
@@ -52,4 +55,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:21.1.0")  // Firebase Authentication
     implementation("com.google.firebase:firebase-database:20.0.5")
 
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("androidx.databinding:databinding-runtime:8.2.0")
 }
