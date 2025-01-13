@@ -1,5 +1,7 @@
 package Adapter
 
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,10 +17,17 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
         fun bind(recipe: Recipe) {
             with(binding) {
-                recipeTitle.text = recipe.title
+                recipeTitle.apply {
+                    text = recipe.title
+                    setTextColor(Color.parseColor("#1F1717"))  // 여기에 색상 설정 추가
+                }
                 recipeBadge.text = recipe.badge
                 recipeTime.text = "${recipe.cookingTime} min"
-                authorName.text = recipe.authorName
+                authorName.apply {
+                    text = recipe.authorName
+                    setTextColor(Color.parseColor("#1F1717"))  // 여기에 색상 설정 추가
+
+                }
 
                 // 이미지 로딩은 Glide 또는 Coil 라이브러리 사용 필요
                 // Glide.with(itemView).load(recipe.imageUrl).into(recipeImage)

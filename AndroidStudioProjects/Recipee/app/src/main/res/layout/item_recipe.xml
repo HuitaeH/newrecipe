@@ -30,7 +30,9 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#1F1717"/>
+                android:textColor="#1F1717"
+                android:theme="@null"
+                style="@null"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
