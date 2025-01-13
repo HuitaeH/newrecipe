@@ -20,6 +20,14 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:layout_marginTop="16dp"/>
+    <!-- Sign-In Button -->
+    <Button
+        android:id="@+id/signin_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign In"
+        android:textColor="@android:color/white"
+        android:padding="12dp" />
 
     <Button
         android:id="@+id/login_button"
