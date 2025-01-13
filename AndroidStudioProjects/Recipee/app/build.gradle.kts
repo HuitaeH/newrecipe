@@ -52,7 +52,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth:21.1.0")  // Firebase Authentication
+    implementation("com.google.firebase:firebase-auth:22.0.0")  // Firebase Authentication
     implementation("com.google.firebase:firebase-database:20.0.5")
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
