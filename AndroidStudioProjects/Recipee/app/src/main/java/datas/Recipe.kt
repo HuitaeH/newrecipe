@@ -1,12 +1,12 @@
 package datas
 
 data class Recipe(
-    val id: Long,
-    val title: String,
-    val imageUrl: String,
-    val cookingTime: Int,
-    val authorName: String,
-    val authorImageUrl: String,
-    val badge: String,
+    var id: Long = 0,
+    var title: String = "",
+    var imageUrl: String = "",
+    var cookingTime: Int = 0,
+    var authorName: String = "",
+    var authorImageUrl: String = "",
+    var badge: String = "",
     var isBookmarked: Boolean = false
 )

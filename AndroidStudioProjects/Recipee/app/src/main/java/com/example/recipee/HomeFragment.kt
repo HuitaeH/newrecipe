@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipee.databinding.FragmentHomeBinding
+import android.widget.Button
+import android.content.Intent
+
 import datas.Recipe
 
 
@@ -23,6 +26,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,8 +37,17 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
+        // Set up Add Recipe Button
+        binding.addRecipeButton.setOnClickListener {
+            // Navigate to PostRecipeActivity
+            val intent = Intent(context, PostRecipeActivity::class.java)
+            startActivity(intent)
+        }
+
         // 샘플 데이터 로드
         loadSampleData()
+
+
     }
 
     private fun loadSampleData() {

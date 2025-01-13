@@ -54,6 +54,8 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth:22.0.0")  // Firebase Authentication
     implementation("com.google.firebase:firebase-database:20.0.5")
+    implementation("com.google.firebase:firebase-firestore:24.7.1")
+
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
