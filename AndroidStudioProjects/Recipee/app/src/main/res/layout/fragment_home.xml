@@ -6,27 +6,39 @@
     android:background="#FCF5ED"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/app_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="RECIPEE"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="#CE5A67"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="15dp"/>
-        <Button
-            android:id="@+id/addRecipeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ADD"
-            />
-    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+<!--        <TextView-->
+<!--            android:id="@+id/app_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="RECIPEE"-->
+<!--            android:textSize="25sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="#CE5A67"-->
+<!--            android:layout_marginStart="18dp"-->
+<!--            android:layout_marginTop="18dp"-->
+<!--            android:layout_marginBottom="15dp"/>-->
+<!--        <Button-->
+<!--            android:id="@+id/addRecipeButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="ADD"-->
+<!--            />-->
+<!--    </LinearLayout>-->
+
+    <TextView
+        android:id="@+id/app_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RECIPEE"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="#CE5A67"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="15dp"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

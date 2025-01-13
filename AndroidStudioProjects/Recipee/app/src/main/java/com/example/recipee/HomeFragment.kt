@@ -37,12 +37,12 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        // Set up Add Recipe Button
-        binding.addRecipeButton.setOnClickListener {
-            // Navigate to PostRecipeActivity
-            val intent = Intent(context, PostRecipeActivity::class.java)
-            startActivity(intent)
-        }
+//        // Set up Add Recipe Button
+//        binding.addRecipeButton.setOnClickListener {
+//            // Navigate to PostRecipeActivity
+//            val intent = Intent(context, PostRecipeActivity::class.java)
+//            startActivity(intent)
+//        }
 
         // 샘플 데이터 로드
         loadSampleData()

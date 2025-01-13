@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     // HomeFragment로 전환
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, HomeFragment())
+                        .commit()
                     true
                 }
                 R.id.navigation_recipe -> {
@@ -51,6 +54,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_mypage -> {
                     // MyPageFragment로 전환
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, ProfileFragment())
+                        .commit()
                     true
                 }
                 else -> false

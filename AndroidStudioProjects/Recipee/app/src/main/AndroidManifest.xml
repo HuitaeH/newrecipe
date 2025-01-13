@@ -39,6 +39,8 @@
             android:name=".PostRecipeActivity"
             android:exported="false"
         />
+
+
     </application>
 
 </manifest>
