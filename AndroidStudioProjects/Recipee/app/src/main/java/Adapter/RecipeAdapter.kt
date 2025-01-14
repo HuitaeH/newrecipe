@@ -78,7 +78,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                         return@setOnClickListener
                     }
 
-                    val userRef = FirebaseFirestore.getInstance().collection("users").document(userId)
+                    val userRef = FirebaseFirestore.getInstance().collection("profile").document(userId)
 
                     userRef.get()
                         .addOnSuccessListener { document ->
@@ -86,7 +86,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                                 // Retrieve or initialize the list of bookmarked posts
                                 val bookmarkedList = document.get("bookmarked") as? MutableList<String> ?: mutableListOf()
 
-                                if (recipe.isBookmarked) {
+                                if (recipe.documentId in bookmarkedList) {
                                     // Add the recipe ID to the bookmarks
                                     if (!bookmarkedList.contains(recipe.documentId)) {
                                         bookmarkedList.add(recipe.documentId)
