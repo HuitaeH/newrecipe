@@ -96,7 +96,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                                     bookmarkedList.remove(recipe.documentId)
                                 }
 
-                                // Update the Firestore document
+                                // Update the Firestore document for bookmarking
                                 userRef.update("bookmarked", bookmarkedList)
                                     .addOnSuccessListener {
                                         Toast.makeText(itemView.context, "Bookmark updated successfully!", Toast.LENGTH_SHORT).show()
@@ -105,6 +105,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                                         Log.e("RecipeAdapter", "Error updating bookmark: ${e.message}")
                                         Toast.makeText(itemView.context, "Failed to update bookmark: ${e.message}", Toast.LENGTH_SHORT).show()
                                     }
+
                             } else {
                                 Toast.makeText(itemView.context, "User data not found!", Toast.LENGTH_SHORT).show()
                             }
