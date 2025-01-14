@@ -34,7 +34,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
             with(binding) {
                 recipeTitle.text = recipe.title
                 recipeBadge.text = recipe.badge
-                recipeTime.text = "${recipe.totalTime} min"
+                recipeTime.text = "${recipe.cookingTime} min"
                 authorName.text = recipe.authorName
 
                 // 좋아요 버튼 상태 설정
