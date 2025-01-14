@@ -1,41 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="32dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#FCF5ED">  <!-- 배경색 추가 -->
 
-    <EditText
-        android:id="@+id/username"
+    <!-- 앱 로고/타이틀 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RECIPEE"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="#CE5A67"
+        android:layout_marginBottom="48dp"/>
+
+    <!-- 이메일 입력 필드 -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="text"/>
+        android:layout_marginBottom="16dp"
+        app:boxBackgroundColor="#FFFFFF"
+        app:boxStrokeColor="#CE5A67"
+        app:hintTextColor="#CE5A67">
 
-    <EditText
-        android:id="@+id/password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColor="#1F1717"
+            android:padding="16dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- 비밀번호 입력 필드 -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginBottom="32dp"
+        app:boxBackgroundColor="#FFFFFF"
+        app:boxStrokeColor="#CE5A67"
+        app:hintTextColor="#CE5A67"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#CE5A67">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColor="#1F1717"
+            android:padding="16dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- 로그인 버튼 -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:layout_marginTop="32dp"/>
-    <!-- Sign-In Button -->
-    <Button
+        android:textColor="#FFFFFF"
+        android:padding="16dp"
+        android:textSize="16sp"
+        app:cornerRadius="8dp"
+        android:backgroundTint="#CE5A67"/>
+
+    <!-- 회원가입 버튼 -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/signin_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign In"
-        android:textColor="@android:color/white"
-        android:padding="12dp" />
-
-
+        android:textColor="#CE5A67"
+        android:padding="16dp"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        app:cornerRadius="8dp"
+        android:backgroundTint="#F4BF96"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
 </LinearLayout>
