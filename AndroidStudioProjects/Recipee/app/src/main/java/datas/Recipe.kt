@@ -18,6 +18,6 @@ data class Recipe(
     var isBookmarked: Boolean = false,
     var uploadTime: Timestamp = Timestamp.now(),
     var userId: String = ""  // Add userId to store the UID of the user creating the recipe
+    var isLiked: Boolean = false,
+    var likeCount: Int = 0,
 )
-
-

@@ -36,6 +36,22 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                 recipeBadge.text = recipe.badge
                 recipeTime.text = "${recipe.totalTime} min"
                 authorName.text = recipe.authorName
+
+                // 좋아요 버튼 상태 설정
+                likeButton.setImageResource(
+                    if (recipe.isLiked) R.drawable.like
+                    else R.drawable.like
+                )
+
+                // 좋아요 수 표시
+                likeCount.text = recipe.likeCount.toString()
+
+                // 좋아요 버튼 클릭 리스너
+                likeButton.setOnClickListener {
+                    recipe.isLiked = !recipe.isLiked
+                    recipe.likeCount += if (recipe.isLiked) 1 else -1
+                    notifyItemChanged(adapterPosition)
+                }
                 // Glide를 통해 이미지 로드 등
 
 
