@@ -5,6 +5,8 @@ import datas.RecipeIngredient  // Import the RecipeIngredient class
 import datas.RecipeCategory    // Import the RecipeCategory enum
 
 data class Recipe(
+    var userId: String = "",  // Add userId to store the UID of the user creating the recipe
+    var documentId: String = "",
     var id: Long = 0,
     var title: String = "",
     var imageUrl: String = "",
@@ -17,7 +19,6 @@ data class Recipe(
     var badge: String = "", //delete this!!!
     var isBookmarked: Boolean = false, //delete this!!!
     var uploadTime: Timestamp = Timestamp.now(),
-    var userId: String = "",  // Add userId to store the UID of the user creating the recipe
     var isLiked: Boolean = false,
     var likeCount: Int = 0
 )

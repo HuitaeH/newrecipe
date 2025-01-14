@@ -12,6 +12,8 @@ import datas.Recipe
 import com.example.recipee.databinding.ItemRecipeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import android.widget.Toast
+
 
 class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     private val recipes = mutableListOf<Recipe>()
@@ -62,7 +64,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                 // Glide.with(itemView).load(recipe.authorImageUrl).into(profileImage)
 
                 bookmarkButton.setImageResource(
-                    if (recipe.isBookmarked) R.drawable.ic_bookmarked
+                    if (recipe.isBookmarked) R.drawable.ic_bookmark
                     else R.drawable.ic_bookmark
                 )
 
@@ -71,40 +73,48 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                     notifyItemChanged(adapterPosition)
 
                     val userId = FirebaseAuth.getInstance().currentUser?.uid
-                    if (userId != null) {
-                        val userRef = FirebaseFirestore.getInstance().collection("users").document(userId)
-                        userRef.get().addOnSuccessListener { document ->
+                    if (userId == null) {
+                        Toast.makeText(itemView.context, "User not logged in!", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+
+                    val userRef = FirebaseFirestore.getInstance().collection("users").document(userId)
+
+                    userRef.get()
+                        .addOnSuccessListener { document ->
                             if (document.exists()) {
-                                // Get the current list of bookmarked posts or initialize an empty list
+                                // Retrieve or initialize the list of bookmarked posts
                                 val bookmarkedList = document.get("bookmarked") as? MutableList<String> ?: mutableListOf()
 
                                 if (recipe.isBookmarked) {
-                                    // Add the post ID to the bookmarked list
-                                    if (!bookmarkedList.contains(recipe.postId)) {
-                                        bookmarkedList.add(recipe.postId)
+                                    // Add the recipe ID to the bookmarks
+                                    if (!bookmarkedList.contains(recipe.documentId)) {
+                                        bookmarkedList.add(recipe.documentId)
                                     }
                                 } else {
-                                    // Remove the post ID from the bookmarked list
-                                    bookmarkedList.remove(recipe.postId)
+                                    // Remove the recipe ID from the bookmarks
+                                    bookmarkedList.remove(recipe.documentId)
                                 }
 
-                                // Update the user's bookmarked list in Firestore
+                                // Update the Firestore document
                                 userRef.update("bookmarked", bookmarkedList)
                                     .addOnSuccessListener {
-                                        // Optional: Notify the user of success
-                                        Toast.makeText(context, "Bookmark updated successfully", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(itemView.context, "Bookmark updated successfully!", Toast.LENGTH_SHORT).show()
                                     }
                                     .addOnFailureListener { e ->
-                                        // Optional: Handle the error
-                                        Toast.makeText(context, "Failed to update bookmark: ${e.message}", Toast.LENGTH_SHORT).show()
+                                        Log.e("RecipeAdapter", "Error updating bookmark: ${e.message}")
+                                        Toast.makeText(itemView.context, "Failed to update bookmark: ${e.message}", Toast.LENGTH_SHORT).show()
                                     }
+                            } else {
+                                Toast.makeText(itemView.context, "User data not found!", Toast.LENGTH_SHORT).show()
                             }
-                        }.addOnFailureListener { e ->
-                            // Optional: Handle the error in fetching user profile
-                            Toast.makeText(context, "Failed to fetch user data: ${e.message}", Toast.LENGTH_SHORT).show()
                         }
-                    }
+                        .addOnFailureListener { e ->
+                            Log.e("RecipeAdapter", "Error fetching user data: ${e.message}")
+                            Toast.makeText(itemView.context, "Failed to fetch user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
                 }
+
 
             }
         }
