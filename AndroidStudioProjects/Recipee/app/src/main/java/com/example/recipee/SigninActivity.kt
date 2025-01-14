@@ -11,6 +11,7 @@ import com.example.recipee.MainActivity
 import com.example.recipee.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import datas.User
 
 class SigninActivity : AppCompatActivity() {
 
@@ -46,7 +47,6 @@ class SigninActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
             // Register user with Firebase Authentication
             auth.createUserWithEmailAndPassword(emailText, passwordText)
                 .addOnCompleteListener { task ->
@@ -77,9 +77,4 @@ class SigninActivity : AppCompatActivity() {
         }
     }
 
-    // User data class to store user information
-    data class User(
-        val username: String? = "",
-        val email: String? = ""
-    )
 }

@@ -1,80 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="#FCF5ED"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="24dp">
 
-        <EditText
-            android:id="@+id/titleInput"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Recipe"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#CE5A67"
+            android:layout_marginBottom="22dp"/>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title"
-            android:inputType="text" />
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-        <EditText
-            android:id="@+id/totalTimeInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Total Time"
-            android:inputType="number" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <EditText
-            android:id="@+id/cookingTimeInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Cooking Time (minutes)"
-            android:inputType="number" />
+                <!-- 제목 입력 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:text="Menu  Name"
+                    android:textColor="#CE5A67"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/authorNameInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Author Name"
-            android:inputType="text" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:boxStrokeColor="#CE5A67"
+                    app:hintTextColor="#CE5A67">
 
-        <EditText
-            android:id="@+id/badgeInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Badge"
-            android:inputType="text" />
 
-        <EditText
-            android:id="@+id/descriptionInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Description"
-            android:inputType="text" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/titleInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Recipe Title"
+                        android:inputType="text"
+                        android:textColor="#1F1717" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/ingredientInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Ingredients (comma separated)"
-            android:inputType="text" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:text="Cooking Time"
+                    android:textColor="#CE5A67"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/categoryInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Categories (comma separated)"
-            android:inputType="text" />
+                <!-- 총 소요시간 입력 -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:boxStrokeColor="#CE5A67"
+                    app:hintTextColor="#CE5A67">
 
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Submit" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/cookingTimeInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Cooking Time (minutes)"
+                        android:inputType="number"
+                        android:textColor="#1F1717" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/gobackButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Go Back" />
+                <!-- 설명 입력 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:text="Description"
+                    android:textColor="#CE5A67"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:boxStrokeColor="#CE5A67"
+                    app:hintTextColor="#CE5A67">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/descriptionInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:hint="Description"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:textColor="#1F1717" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:text="Ingredients"
+                    android:textColor="#CE5A67"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- 재료 입력 -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:boxStrokeColor="#CE5A67"
+                    app:hintTextColor="#CE5A67">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ingredientInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:hint="Enter Ingredients (comma separated)"
+                        android:inputType="textMultiLine"
+                        android:minLines="2"
+                        android:textColor="#1F1717" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 카테고리 선택 섹션 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Category"
+                    android:textColor="#CE5A67"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    app:singleSelection="true">  <!-- 하나만 선택 가능하도록 설정 -->
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_diet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Diet"
+                        android:textColor="#1F1717"
+                        app:chipBackgroundColor="#F4BF96" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_vegan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Vegan"
+                        android:textColor="#1F1717"
+                        app:chipBackgroundColor="#F4BF96" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_health"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Health"
+                        android:textColor="#1F1717"
+                        app:chipBackgroundColor="#F4BF96" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+                <!-- 버튼들 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/submitButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#CE5A67"
+                    android:padding="16dp"
+                    android:text="Submit Recipe"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/gobackButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#F4BF96"
+                    android:padding="16dp"
+                    android:text="Go Back"
+                    android:textColor="#CE5A67"
+                    android:textSize="16sp"
+                    app:cornerRadius="12dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </ScrollView>

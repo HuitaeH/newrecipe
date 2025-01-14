@@ -10,20 +10,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import android.net.Uri
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.chip.Chip
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Timestamp
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.util.UUID
-
-
 import datas.Recipe
 import datas.RecipeCategory
 import datas.RecipeIngredient
-
 class PostRecipeActivity : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
+    private var selectedCategory: String? = null  // 선택된 카테고리 저장
 
     // For image selection
     private val PICK_IMAGE_REQUEST = 1
@@ -33,77 +34,90 @@ class PostRecipeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.post_recipe_activity)
 
-        val titleInput: EditText = findViewById(R.id.titleInput)
-        val cookingTimeInput: EditText = findViewById(R.id.cookingTimeInput)
-        val badgeInput: EditText = findViewById(R.id.badgeInput)
-        val ingredientInput: EditText = findViewById(R.id.ingredientInput)
-        val categoryInput: EditText = findViewById(R.id.categoryInput)
-        val totalTimeInput: EditText = findViewById(R.id.totalTimeInput)
-        val descriptionInput: EditText = findViewById(R.id.descriptionInput)
-        val submitButton: Button = findViewById(R.id.submitButton)
-        val gobackButton: Button = findViewById(R.id.gobackButton)
+        val titleInput: TextInputEditText = findViewById(R.id.titleInput)
+        val badgeInput: TextInputEditText = findViewById(R.id.badgeInput)
+        val ingredientInput: TextInputEditText = findViewById(R.id.ingredientInput)
+        val cookingTimeInput: TextInputEditText = findViewById(R.id.cookingTimeInput)
+        val descriptionInput: TextInputEditText = findViewById(R.id.descriptionInput)
+
+        // 카테고리 칩 그룹 설정
+        val chipDiet: Chip = findViewById(R.id.chip_diet)
+        val chipVegan: Chip = findViewById(R.id.chip_vegan)
+        val chipHealth: Chip = findViewById(R.id.chip_health)
+
+        val submitButton: MaterialButton = findViewById(R.id.submitButton)
+        val gobackButton: MaterialButton = findViewById(R.id.gobackButton)
+
+        // 카테고리 칩 리스너 설정
+        chipDiet.setOnCheckedChangeListener { chip, isChecked ->
+            if (isChecked) {
+                chipVegan.isChecked = false
+                chipHealth.isChecked = false
+                selectedCategory = "Diet"
+            }
+        }
+
+        chipVegan.setOnCheckedChangeListener { chip, isChecked ->
+            if (isChecked) {
+                chipDiet.isChecked = false
+                chipHealth.isChecked = false
+                selectedCategory = "Vegan"
+            }
+        }
+
+        chipHealth.setOnCheckedChangeListener { chip, isChecked ->
+            if (isChecked) {
+                chipDiet.isChecked = false
+                chipVegan.isChecked = false
+                selectedCategory = "Health"
+            }
+        }
 
         submitButton.setOnClickListener {
             val title = titleInput.text.toString().trim()
-            val cookingTime = cookingTimeInput.text.toString().toIntOrNull() ?: 0
             val badge = badgeInput.text.toString().trim()
-
-            // Get raw inputs for ingredients and categories
+            val cookingTime = cookingTimeInput.text.toString().toIntOrNull() ?: 0
+            val description = descriptionInput.text.toString().trim()
             val ingredientsInput = ingredientInput.text.toString()
-            val categoriesInput = categoryInput.text.toString()
 
-            // Ensure ingredientsInput is not empty before splitting
+            if (selectedCategory == null) {
+                Toast.makeText(this, "Please select a category", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 재료 처리
             val ingredients = if (ingredientsInput.isNotEmpty()) {
                 ingredientsInput.split(",").map {
                     val parts = it.split(":")
                     if (parts.size == 2) {
                         RecipeIngredient(parts[0].trim(), parts[1].trim())
                     } else {
-                        // Handle invalid input format here, e.g., show a message or skip invalid entries
                         RecipeIngredient("Unknown", "Unknown")
                     }
                 }
             } else {
-                emptyList<RecipeIngredient>()
-            }
-
-            // Ensure categoriesInput is not empty before splitting
-            val categories = if (categoriesInput.isNotEmpty()) {
-                categoriesInput.split(",").map { it.trim() }
-                    .mapNotNull { categoryString ->
-                        // Try to map the string into an enum value
-                        try {
-                            RecipeCategory.valueOf(categoryString.uppercase())
-                        } catch (e: IllegalArgumentException) {
-                            // Handle invalid category string (e.g., show error or skip invalid input)
-                            null
-                        }
-                    }
-            } else {
-                emptyList<RecipeCategory>()
+                emptyList()
             }
 
             val user = auth.currentUser
             if (user != null) {
-                val userId = user.uid // Get the unique user ID
-                val authorName = user.displayName ?: "Anonymous" // Optional: Get user's display name
+                val userId = user.uid
+                val authorName = user.displayName ?: "Anonymous"
 
-                // Create a Recipe object
                 val recipe = Recipe(
                     id = System.currentTimeMillis(),
                     title = title,
-                    imageUrl = "", // Will be set later if the user selects an image
+                    imageUrl = "",
                     cookingTime = cookingTime,
-                    ingredients = ingredients,  // List<RecipeIngredient>
-                    category = categories,      // List<String>
+                    ingredients = ingredients,
                     authorName = authorName,
-                    authorImageUrl = "",       // Optional: Add functionality for author image
+                    authorImageUrl = "",
                     badge = badge,
+                    category = selectedCategory!!,  // 선택된 카테고리 추가
                     isBookmarked = false,
                     uploadTime = Timestamp.now()
                 )
 
-                // Save recipe to Firestore
                 saveRecipeToFirestore(recipe, userId)
             } else {
                 Toast.makeText(this, "User not signed in!", Toast.LENGTH_SHORT).show()

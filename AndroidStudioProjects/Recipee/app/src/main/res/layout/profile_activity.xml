@@ -1,53 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FCF5ED"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/profilePicture"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_profile_placeholder" />
-
-    <Button
-        android:id="@+id/updateProfilePictureButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Profile Picture" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Username"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            android:backgroundTint="#F4BF96">
 
-    <TextView
-        android:id="@+id/points"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Points: 0"
-        android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/likes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Likes: 0"
-        android:textSize="16sp" />
+                <ImageView
+                    android:id="@+id/profilePicture"
+                    android:layout_width="200dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_profile_placeholder"
+                     />
 
-    <TextView
-        android:id="@+id/badges"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Badges: None"
-        android:textSize="16sp" />
-</LinearLayout>
+                <Button
+                    android:id="@+id/updateProfilePictureButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update Profile"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#FCF5ED"
+                    android:backgroundTint="#CE5A67"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="8dp"
+                    android:elevation="2.5dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 유저 이름 -->
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#1F1717"
+            android:layout_marginBottom="8dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2.5dp"
+            android:background="#CE5A67"
+            android:layout_marginVertical="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:id="@+id/points_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Points"
+                android:layout_marginStart="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#1F1717" />
+
+            <TextView
+                android:id="@+id/points_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textSize="18sp"
+                android:text="0"
+                android:layout_marginRight="10dp"
+                android:textColor="#CE5A67" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CE5A67"
+            android:layout_marginVertical="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/badges_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Badge"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:textColor="#1F1717" />
+
+            <TextView
+                android:id="@+id/badges_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="None"
+                android:layout_marginRight="10dp"
+            android:textSize="18sp"
+            android:textColor="#CE5A67" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CE5A67"
+            android:layout_marginVertical="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="0dp"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/viewBookmarksButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Bookmarks"
+                android:layout_marginStart="5dp"
+                android:backgroundTint="#CE5A67"
+                android:textColor="#FCF5ED"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:elevation="2dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="0"
+                android:paddingStart= "205dp"
+                android:textSize="16sp"
+                android:textColor="#CE5A67" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+
