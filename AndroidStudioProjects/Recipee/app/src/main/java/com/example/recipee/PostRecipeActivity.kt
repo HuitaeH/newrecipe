@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import android.net.Uri
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.TextInputEditText
@@ -25,6 +27,7 @@ class PostRecipeActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private var selectedCategory: String? = null  // 선택된 카테고리 저장
+    private lateinit var recipeImageView: ImageView
 
     // For image selection
     private val PICK_IMAGE_REQUEST = 1
@@ -33,6 +36,7 @@ class PostRecipeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.post_recipe_activity)
+        recipeImageView = findViewById(R.id.recipeImageView)
 
         val titleInput: TextInputEditText = findViewById(R.id.titleInput)
         val ingredientInput: TextInputEditText = findViewById(R.id.ingredientInput)
@@ -181,6 +185,10 @@ class PostRecipeActivity : AppCompatActivity() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
             selectedImageUri = data.data
             // Optionally, upload image to Firebase Storage and update the recipe object
+            Glide.with(this)
+                .load(selectedImageUri)
+                .centerCrop()
+                .into(recipeImageView)
         }
     }
 }
