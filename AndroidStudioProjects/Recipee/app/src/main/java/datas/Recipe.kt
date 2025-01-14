@@ -8,5 +8,7 @@ data class Recipe(
     var authorName: String = "",
     var authorImageUrl: String = "",
     var badge: String = "",
+    var isLiked: Boolean = false,
+    var likeCount: Int = 0,
     var isBookmarked: Boolean = false
 )

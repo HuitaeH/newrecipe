@@ -58,7 +58,6 @@
             android:padding="16dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- 로그인 버튼 -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_button"
         android:layout_width="match_parent"
@@ -70,7 +69,6 @@
         app:cornerRadius="8dp"
         android:backgroundTint="#CE5A67"/>
 
-    <!-- 회원가입 버튼 -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signin_button"
         android:layout_width="match_parent"
