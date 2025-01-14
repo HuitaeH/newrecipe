@@ -34,7 +34,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
             with(binding) {
                 recipeTitle.text = recipe.title
                 recipeBadge.text = recipe.badge
-                recipeTime.text = "${recipe.cookingTime} min"
+                recipeTime.text = "${recipe.totalTime} min"
                 authorName.text = recipe.authorName
                 // Glide를 통해 이미지 로드 등
 

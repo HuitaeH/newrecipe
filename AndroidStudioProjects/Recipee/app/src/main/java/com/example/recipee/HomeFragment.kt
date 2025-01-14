@@ -38,12 +38,12 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
-//        // Set up Add Recipe Button
-//        binding.addRecipeButton.setOnClickListener {
-//            // Navigate to PostRecipeActivity
-//            val intent = Intent(context, PostRecipeActivity::class.java)
-//            startActivity(intent)
-//        }
+        // Set up Add Recipe Button
+        binding.addRecipeButton.setOnClickListener {
+            // Navigate to PostRecipeActivity
+            val intent = Intent(context, PostRecipeActivity::class.java)
+            startActivity(intent)
+        }
 
         // 샘플 데이터 로드
         loadSampleData()
@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
                 id = 1,
                 title = "Spiced Fried Chicken",
                 imageUrl = "sample_url",
-                cookingTime = 30,
+                totalTime = 30,
                 authorName = "Huitae",
                 authorImageUrl = "profile_url",
                 badge = "beginner"
@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
                 id = 2,
                 title = "Creamy Garlic Pasta",
                 imageUrl = "sample_url",
-                cookingTime = 20,
+                totalTime = 20,
                 authorName = "Minji",
                 authorImageUrl = "profile_url",
                 badge = "intermediate"

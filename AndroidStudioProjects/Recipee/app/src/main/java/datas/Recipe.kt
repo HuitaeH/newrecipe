@@ -9,7 +9,6 @@ data class Recipe(
     var title: String = "",
     var imageUrl: String = "",
     var totalTime: Int = 0,
-    var cookingTime: Int = 0,
     var description: String = "",
     var ingredients: List<RecipeIngredient> = emptyList(),  // Using RecipeIngredient here
     var category: List<RecipeCategory> = emptyList(),  // Using RecipeCategory here
@@ -17,7 +16,8 @@ data class Recipe(
     var authorImageUrl: String = "",
     var badge: String = "",
     var isBookmarked: Boolean = false,
-    var uploadTime: Timestamp = Timestamp.now()
+    var uploadTime: Timestamp = Timestamp.now(),
+    var userId: String = ""  // Add userId to store the UID of the user creating the recipe
 )
 
 

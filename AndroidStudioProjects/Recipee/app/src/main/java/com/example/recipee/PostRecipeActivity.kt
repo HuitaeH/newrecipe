@@ -34,7 +34,6 @@ class PostRecipeActivity : AppCompatActivity() {
         setContentView(R.layout.post_recipe_activity)
 
         val titleInput: EditText = findViewById(R.id.titleInput)
-        val cookingTimeInput: EditText = findViewById(R.id.cookingTimeInput)
         val badgeInput: EditText = findViewById(R.id.badgeInput)
         val ingredientInput: EditText = findViewById(R.id.ingredientInput)
         val categoryInput: EditText = findViewById(R.id.categoryInput)
@@ -45,21 +44,26 @@ class PostRecipeActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             val title = titleInput.text.toString().trim()
-            val cookingTime = cookingTimeInput.text.toString().toIntOrNull() ?: 0
             val badge = badgeInput.text.toString().trim()
+            val ingredientsInput = ingredientInput.text.toString().trim()
+            val categoriesInput = categoryInput.text.toString().trim()
+            val totalTime = totalTimeInput.text.toString().trim()
+            val description = descriptionInput.text.toString().trim()
 
-            // Get raw inputs for ingredients and categories
-            val ingredientsInput = ingredientInput.text.toString()
-            val categoriesInput = categoryInput.text.toString()
+            // Check if any required field is empty
+            if (title.isEmpty() || badge.isEmpty() || ingredientsInput.isEmpty() || categoriesInput.isEmpty() || totalTime.isEmpty() || description.isEmpty()) {
+                Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener // Return early to prevent submission
+            }
 
-            // Ensure ingredientsInput is not empty before splitting
+            // Parse ingredients and categories as before
             val ingredients = if (ingredientsInput.isNotEmpty()) {
                 ingredientsInput.split(",").map {
                     val parts = it.split(":")
                     if (parts.size == 2) {
                         RecipeIngredient(parts[0].trim(), parts[1].trim())
                     } else {
-                        // Handle invalid input format here, e.g., show a message or skip invalid entries
+                        // Handle invalid input format here
                         RecipeIngredient("Unknown", "Unknown")
                     }
                 }
@@ -67,15 +71,13 @@ class PostRecipeActivity : AppCompatActivity() {
                 emptyList<RecipeIngredient>()
             }
 
-            // Ensure categoriesInput is not empty before splitting
             val categories = if (categoriesInput.isNotEmpty()) {
                 categoriesInput.split(",").map { it.trim() }
                     .mapNotNull { categoryString ->
-                        // Try to map the string into an enum value
                         try {
                             RecipeCategory.valueOf(categoryString.uppercase())
                         } catch (e: IllegalArgumentException) {
-                            // Handle invalid category string (e.g., show error or skip invalid input)
+                            // Handle invalid category string
                             null
                         }
                     }
@@ -93,18 +95,21 @@ class PostRecipeActivity : AppCompatActivity() {
                     id = System.currentTimeMillis(),
                     title = title,
                     imageUrl = "", // Will be set later if the user selects an image
-                    cookingTime = cookingTime,
                     ingredients = ingredients,  // List<RecipeIngredient>
                     category = categories,      // List<String>
                     authorName = authorName,
                     authorImageUrl = "",       // Optional: Add functionality for author image
                     badge = badge,
                     isBookmarked = false,
-                    uploadTime = Timestamp.now()
+                    uploadTime = Timestamp.now(),
+                    userId = userId
                 )
 
                 // Save recipe to Firestore
                 saveRecipeToFirestore(recipe, userId)
+                Toast.makeText(this, "Post Uploaded!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             } else {
                 Toast.makeText(this, "User not signed in!", Toast.LENGTH_SHORT).show()
             }
@@ -112,24 +117,31 @@ class PostRecipeActivity : AppCompatActivity() {
 
 
         gobackButton.setOnClickListener {
-            val intent = Intent(this, HomeFragment::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
 
-    private fun saveRecipeToFirestore(recipe: Recipe, userId: String) {
-        db.collection("users").document(userId).collection("recipes").document(recipe.id.toString())
-            .set(recipe)
+    fun saveRecipeToFirestore(recipe: Recipe, userId: String) {
+        val db = FirebaseFirestore.getInstance()
+        val recipeRef = db.collection("users")
+            .document(userId)
+            .collection("recipes")
+            .document(recipe.id.toString())
+
+        recipeRef.set(recipe)
             .addOnSuccessListener {
-                Log.d("Firestore", "Recipe successfully added for user: $userId")
-                Toast.makeText(this, "Recipe posted successfully!", Toast.LENGTH_SHORT).show()
+                Log.d("Firestore", "Recipe added successfully at path: users/$userId/recipes/${recipe.id}")
             }
-            .addOnFailureListener { e ->
-                Log.e("Firestore", "Error adding recipe", e)
-                Toast.makeText(this, "Failed to post recipe.", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { exception ->
+                Log.e("Firestore", "Error adding recipe: ${exception.message}", exception)
             }
     }
+
+
+
+
+
 
     // Function to upload a profile picture (image) if needed
     private fun uploadRecipeImage(imageUri: Uri, callback: (String?) -> Unit) {

@@ -23,13 +23,6 @@
             android:inputType="number" />
 
         <EditText
-            android:id="@+id/cookingTimeInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Cooking Time (minutes)"
-            android:inputType="number" />
-
-        <EditText
             android:id="@+id/authorNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
