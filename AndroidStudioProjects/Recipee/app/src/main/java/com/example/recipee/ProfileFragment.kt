@@ -1,5 +1,7 @@
 package com.example.recipee
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +10,15 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.Timestamp
+import android.widget.TextView
+import android.widget.ImageView
+import android.widget.Button
+import com.bumptech.glide.Glide
 import java.util.*
+import datas.UserProfile
 
 class ProfileFragment : Fragment(R.layout.profile_activity) {
 
@@ -19,6 +26,8 @@ class ProfileFragment : Fragment(R.layout.profile_activity) {
     private val auth = FirebaseAuth.getInstance()
     private val storage = FirebaseStorage.getInstance()
     private val storageRef: StorageReference = storage.reference
+    private val PICK_IMAGE_REQUEST = 1
+    private var selectedImageUri: Uri? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,70 +35,97 @@ class ProfileFragment : Fragment(R.layout.profile_activity) {
         val user = auth.currentUser
         if (user != null) {
             val userId = user.uid
-            // Example: Set the profile picture URL and other info
-            val profilePictureUrl = "https://example.com/profile.jpg" // Get from image upload
-            val username = "JohnDoe" // Get from input field or user info
-            val points = 100
-            val badges = listOf("Beginner", "Expert") // This can be determined based on points
-            val posts = listOf("post1", "post2") // Can be fetched from Firestore
-            val likes = 50
-            val lastLogin = FieldValue.serverTimestamp() // Automatically set the timestamp for last login
+            fetchAndDisplayUserProfile(userId, view)
 
-            // Store or update user profile data in Firestore
-            saveUserProfile(userId, username, profilePictureUrl, points, badges, posts, likes, lastLogin)
+            // Set up the profile picture update button
+            val updateButton = view.findViewById<Button>(R.id.updateProfilePictureButton)
+            updateButton.setOnClickListener {
+                openFileChooser()
+            }
         } else {
             Toast.makeText(requireContext(), "User not signed in!", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun saveUserProfile(
-        userId: String,
-        username: String,
-        profilePictureUrl: String,
-        points: Int,
-        badges: List<String>,
-        posts: List<String>,
-        likes: Int,
-        lastLogin: Any
-    ) {
-        // Create a map of user data
-        val userData = hashMapOf(
-            "username" to username,
-            "profilePictureUrl" to profilePictureUrl,
-            "points" to points,
-            "badges" to badges,
-            "posts" to posts,
-            "likes" to likes,
-            "lastLogin" to lastLogin,
-            "postHistory" to posts // This can also be a history of all posts
-        )
+    private fun fetchAndDisplayUserProfile(userId: String, view: View) {
+        db.collection("profile").document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val userProfile = UserProfile(
+                        userId = userId,
+                        username = document.getString("username") ?: "Unknown User",
+                        profilePictureUrl = document.getString("profilePictureUrl") ?: "",
+                        points = document.getLong("points")?.toInt() ?: 0,
+                        posts = (document.get("posts") as? List<String>) ?: emptyList(),
+                        likes = document.getLong("likes")?.toInt() ?: 0,
+                        lastLogin = document.getTimestamp("lastLogin") ?: Timestamp.now()
+                    )
 
-        // Save data under the user's unique ID in the 'profile' collection
-        db.collection("profile").document(userId) // Change collection name here
-            .set(userData)
-            .addOnSuccessListener {
-                Log.d("Firestore", "User profile added or updated for user: $userId")
-                Toast.makeText(requireContext(), "User profile updated successfully!", Toast.LENGTH_SHORT).show()
+                    view.findViewById<TextView>(R.id.username).text = userProfile.username
+                    view.findViewById<TextView>(R.id.points).text = "Points: ${userProfile.points}"
+                    view.findViewById<TextView>(R.id.likes).text = "Likes: ${userProfile.likes}"
+                    view.findViewById<TextView>(R.id.badges).text = "Badge: ${userProfile.badge}"
+
+                    // Load profile picture
+                    val imageView = view.findViewById<ImageView>(R.id.profilePicture)
+                    Glide.with(requireContext())
+                        .load(userProfile.profilePictureUrl)
+                        .placeholder(R.drawable.ic_profile_placeholder)
+                        .into(imageView)
+                }
             }
             .addOnFailureListener { e ->
-                Log.e("Firestore", "Error updating user profile", e)
-                Toast.makeText(requireContext(), "Failed to update user profile.", Toast.LENGTH_SHORT).show()
+                Log.e("Firestore", "Error fetching profile data", e)
+                Toast.makeText(requireContext(), "Failed to fetch profile data.", Toast.LENGTH_SHORT).show()
             }
     }
 
-    // Function to upload a profile picture to Firebase Storage and return the URL
+    private fun openFileChooser() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            selectedImageUri = data.data
+            uploadProfilePicture(selectedImageUri!!) { imageUrl ->
+                if (imageUrl != null) {
+                    updateProfilePictureInFirestore(imageUrl)
+                } else {
+                    Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     private fun uploadProfilePicture(imageUri: Uri, callback: (String?) -> Unit) {
         val profilePicturesRef = storageRef.child("profile_pictures/${UUID.randomUUID()}")
         profilePicturesRef.putFile(imageUri)
             .addOnSuccessListener {
                 profilePicturesRef.downloadUrl.addOnSuccessListener { uri ->
-                    // Return the image URL after successful upload via callback
                     callback(uri.toString())
                 }
             }
-            .addOnFailureListener {
-                Log.e("Firebase", "Error uploading profile picture", it)
+            .addOnFailureListener { e ->
+                Log.e("Firebase", "Error uploading profile picture", e)
                 callback(null)
+            }
+    }
+
+    private fun updateProfilePictureInFirestore(imageUrl: String) {
+        val userId = auth.currentUser?.uid ?: return
+        db.collection("profile").document(userId)
+            .update("profilePictureUrl", imageUrl)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Profile picture updated!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error updating profile picture in Firestore", e)
+                Toast.makeText(requireContext(), "Failed to update profile picture.", Toast.LENGTH_SHORT).show()
             }
     }
 }
