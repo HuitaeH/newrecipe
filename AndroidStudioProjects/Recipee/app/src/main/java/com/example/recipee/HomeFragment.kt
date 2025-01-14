@@ -21,6 +21,7 @@ class HomeFragment : Fragment() {
     private val recipeAdapter = RecipeAdapter()
     private var allRecipes: List<Recipe> = emptyList()
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,7 +66,8 @@ class HomeFragment : Fragment() {
                 authorImageUrl = "profile_url",
                 badge = "beginner",
                 likeCount = 15,
-                isLiked = true
+                isLiked = true,
+                category = "diet"
             ),
             Recipe(
                 id = 2,
@@ -76,9 +78,9 @@ class HomeFragment : Fragment() {
                 authorImageUrl = "profile_url",
                 badge = "intermediate",
                 likeCount = 8,
-                isLiked = false
+                isLiked = false,
+                category = "vegan"
             )
-            // 더 많은 샘플 데이터 추가
         )
         recipeAdapter.submitList(allRecipes)
     }

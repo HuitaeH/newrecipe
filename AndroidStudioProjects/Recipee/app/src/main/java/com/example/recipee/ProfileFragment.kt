@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.ImageView
 import android.widget.Button
 import com.bumptech.glide.Glide
+import datas.Recipe
 import java.util.*
 import datas.UserProfile
 
@@ -28,6 +29,7 @@ class ProfileFragment : Fragment(R.layout.profile_activity) {
     private val storageRef: StorageReference = storage.reference
     private val PICK_IMAGE_REQUEST = 1
     private var selectedImageUri: Uri? = null
+    private val bookmarkedRecipes = mutableListOf<Recipe>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,7 +39,6 @@ class ProfileFragment : Fragment(R.layout.profile_activity) {
             val userId = user.uid
             fetchAndDisplayUserProfile(userId, view)
 
-            // Set up the profile picture update button
             val updateButton = view.findViewById<Button>(R.id.updateProfilePictureButton)
             updateButton.setOnClickListener {
                 openFileChooser()
@@ -58,14 +59,20 @@ class ProfileFragment : Fragment(R.layout.profile_activity) {
                         profilePictureUrl = document.getString("profilePictureUrl") ?: "",
                         points = document.getLong("points")?.toInt() ?: 0,
                         posts = (document.get("posts") as? List<String>) ?: emptyList(),
-                        likes = document.getLong("likes")?.toInt() ?: 0,
                         lastLogin = document.getTimestamp("lastLogin") ?: Timestamp.now()
                     )
 
                     view.findViewById<TextView>(R.id.username).text = userProfile.username
-                    view.findViewById<TextView>(R.id.points).text = "Points: ${userProfile.points}"
-                    view.findViewById<TextView>(R.id.likes).text = "Likes: ${userProfile.likes}"
-                    view.findViewById<TextView>(R.id.badges).text = "Badge: ${userProfile.badge}"
+                    // "Points"는 첫 번째 TextView에 고정
+                    view.findViewById<TextView>(R.id.points_label).text = "Points"
+
+                    // points 값은 두 번째 TextView에 설정
+                    view.findViewById<TextView>(R.id.points_value).text = userProfile.points.toString()
+                    // "Badge"는 첫 번째 TextView에 고정
+                    view.findViewById<TextView>(R.id.badges_label).text = "Badge"
+
+                    // badge 값은 두 번째 TextView에 설정
+                    view.findViewById<TextView>(R.id.badges_value).text = userProfile.badge
 
                     // Load profile picture
                     val imageView = view.findViewById<ImageView>(R.id.profilePicture)
