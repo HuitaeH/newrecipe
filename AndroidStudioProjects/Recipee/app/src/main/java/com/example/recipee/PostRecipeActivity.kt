@@ -37,6 +37,12 @@ class PostRecipeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.post_recipe_activity)
         recipeImageView = findViewById(R.id.recipeImageView)
+        val selectImageButton: MaterialButton = findViewById(R.id.selectImageButton)
+
+        selectImageButton.setOnClickListener {
+            openImageChooser() // 이미지 선택 창을 여는 함수 호출
+        }
+
 
         val titleInput: TextInputEditText = findViewById(R.id.titleInput)
         val ingredientInput: TextInputEditText = findViewById(R.id.ingredientInput)
@@ -116,22 +122,37 @@ class PostRecipeActivity : AppCompatActivity() {
                     ingredients = ingredients,
                     authorName = authorName,
                     authorImageUrl = "",
+                    description = description,
                     category = selectedCategory!!,  // 선택된 카테고리 추가
                     isBookmarked = false,
                     uploadTime = Timestamp.now(),
                     userId = userId
                 )
 
-                // Save recipe to Firestore
-                saveRecipeToFirestore(recipe, userId)
-                Toast.makeText(this, "Post Uploaded!", Toast.LENGTH_SHORT).show()
+                // 이미지 업로드 및 Firestore 저장
+                if (selectedImageUri != null) { // 이미지가 선택된 경우
+                    uploadRecipeImage(selectedImageUri!!) { imageUrl ->
+                        if (imageUrl != null) {
+                            recipe.imageUrl = imageUrl // 업로드된 이미지 URL 설정
+                            saveRecipeToFirestore(recipe, userId) // Firestore에 저장
+                            Toast.makeText(this, "Recipe posted with image!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Failed to upload image!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    // 이미지 없이 저장
+                    saveRecipeToFirestore(recipe, userId)
+                    Toast.makeText(this, "Recipe posted without image!", Toast.LENGTH_SHORT).show()
+                }
+
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, "User not signed in!", Toast.LENGTH_SHORT).show()
             }
         }
-
 
         gobackButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
