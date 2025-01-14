@@ -7,11 +7,13 @@ import com.google.firebase.Timestamp
 data class UserProfile(
     var userId: String = "",
     var username: String = "",
+    var useremail: String = "",
     var profilePictureUrl: String = "",
     var points: Int = 50,
     var badge: String = calculateBadge(points), // Badge derived dynamically
     var posts: List<String> = emptyList(),
-    var likes: Int = 0,
+    var likedRecipes: List<String> = emptyList(),
+    var bookmarked: List<String> = emptyList(),
     var lastLogin: Timestamp = Timestamp.now()
 ) {
     companion object {

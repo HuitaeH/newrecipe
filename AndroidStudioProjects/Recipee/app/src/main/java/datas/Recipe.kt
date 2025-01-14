@@ -14,8 +14,8 @@ data class Recipe(
     val category: String,  // Using RecipeCategory here
     var authorName: String = "",
     var authorImageUrl: String = "",
-    var badge: String = "",
-    var isBookmarked: Boolean = false,
+    var badge: String = "", //delete this!!!
+    var isBookmarked: Boolean = false, //delete this!!!
     var uploadTime: Timestamp = Timestamp.now(),
     var userId: String = "",  // Add userId to store the UID of the user creating the recipe
     var isLiked: Boolean = false,

@@ -10,6 +10,8 @@ import com.example.recipee.R
 import com.example.recipee.RecipeDetailFragment
 import datas.Recipe
 import com.example.recipee.databinding.ItemRecipeBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     private val recipes = mutableListOf<Recipe>()
@@ -60,14 +62,50 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                 // Glide.with(itemView).load(recipe.authorImageUrl).into(profileImage)
 
                 bookmarkButton.setImageResource(
-                    if (recipe.isBookmarked) R.drawable.ic_bookmark
+                    if (recipe.isBookmarked) R.drawable.ic_bookmarked
                     else R.drawable.ic_bookmark
                 )
 
                 bookmarkButton.setOnClickListener {
                     recipe.isBookmarked = !recipe.isBookmarked
                     notifyItemChanged(adapterPosition)
+
+                    val userId = FirebaseAuth.getInstance().currentUser?.uid
+                    if (userId != null) {
+                        val userRef = FirebaseFirestore.getInstance().collection("users").document(userId)
+                        userRef.get().addOnSuccessListener { document ->
+                            if (document.exists()) {
+                                // Get the current list of bookmarked posts or initialize an empty list
+                                val bookmarkedList = document.get("bookmarked") as? MutableList<String> ?: mutableListOf()
+
+                                if (recipe.isBookmarked) {
+                                    // Add the post ID to the bookmarked list
+                                    if (!bookmarkedList.contains(recipe.postId)) {
+                                        bookmarkedList.add(recipe.postId)
+                                    }
+                                } else {
+                                    // Remove the post ID from the bookmarked list
+                                    bookmarkedList.remove(recipe.postId)
+                                }
+
+                                // Update the user's bookmarked list in Firestore
+                                userRef.update("bookmarked", bookmarkedList)
+                                    .addOnSuccessListener {
+                                        // Optional: Notify the user of success
+                                        Toast.makeText(context, "Bookmark updated successfully", Toast.LENGTH_SHORT).show()
+                                    }
+                                    .addOnFailureListener { e ->
+                                        // Optional: Handle the error
+                                        Toast.makeText(context, "Failed to update bookmark: ${e.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                            }
+                        }.addOnFailureListener { e ->
+                            // Optional: Handle the error in fetching user profile
+                            Toast.makeText(context, "Failed to fetch user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
+
             }
         }
     }

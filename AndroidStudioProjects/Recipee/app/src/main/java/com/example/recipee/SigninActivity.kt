@@ -10,8 +10,10 @@ import com.example.recipee.LoginActivity
 import com.example.recipee.MainActivity
 import com.example.recipee.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import datas.User
+import com.google.firebase.firestore.FirebaseFirestore
+import datas.UserProfile
+import com.google.firebase.Timestamp
+
 
 class SigninActivity : AppCompatActivity() {
 
@@ -53,15 +55,30 @@ class SigninActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Save username to Firebase Realtime Database
                         val userId = auth.currentUser?.uid
-                        val database = FirebaseDatabase.getInstance().reference
-                        val user = User(usernameText, emailText)
+                        val database = FirebaseFirestore.getInstance()
+//                        val user = User(usernameText, emailText)
+
+                        // Create a default user profile with additional fields
+                        val userProfile = UserProfile(
+                            userId = userId ?: "",
+                            username = usernameText,
+                            useremail = emailText,
+                            profilePictureUrl = "", // You can set a default image URL here if needed
+                            points = 50,  // Default points
+                            badge = UserProfile.calculateBadge(50),  // Calculate badge based on points
+                            posts = emptyList(),  // Empty list of posts initially
+                            likedRecipes = emptyList(),  // Empty list of liked recipes
+                            bookmarked = emptyList(),  // Empty list of bookmarked recipes
+                            lastLogin = Timestamp.now()  // Current timestamp
+                        )
 
                         userId?.let {
-                            database.child("users").child(it).setValue(user)
+                            // Store user data (username and email) in Firestore under 'users' collection
+                            database.collection("profile").document(it).set(userProfile)
                                 .addOnCompleteListener { dbTask ->
                                     if (dbTask.isSuccessful) {
                                         Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
-                                        // Navigate to main activity
+                                        // Navigate to login activity
                                         val intent = Intent(this, LoginActivity::class.java)
                                         startActivity(intent)
                                         finish()
