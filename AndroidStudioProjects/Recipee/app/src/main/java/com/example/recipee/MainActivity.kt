@@ -53,6 +53,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_community -> {
                     // CommunityFragment로 전환
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, FridgeFragment())
+                        .commit()
                     true
                 }
                 R.id.navigation_mypage -> {
