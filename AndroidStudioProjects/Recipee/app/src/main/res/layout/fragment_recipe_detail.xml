@@ -38,8 +38,9 @@
                     android:id="@+id/recipe_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="28sp"
+                    android:textSize="25sp"
                     android:textStyle="bold"
+                    android:fontFamily="serif"
                     android:textColor="#1F1717"
                     android:layout_marginBottom="16dp"/>
 
@@ -63,6 +64,7 @@
                             android:layout_height="wrap_content"
                             android:text="Time"
                             android:textStyle="bold"
+                            android:fontFamily="serif"
                             android:textColor="#CE5A67"
                             android:textSize="16sp"/>
 
@@ -70,7 +72,8 @@
                             android:id="@+id/total_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
+                            android:textSize="17sp"
+                            android:fontFamily="serif"
                             android:textStyle="bold"
                             android:textColor="#1F1717"
                             android:layout_marginTop="4dp"/>
@@ -82,7 +85,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Recipe Description"
-                    android:textSize="16sp"
+                    android:textSize="17sp"
+                    android:fontFamily="serif"
                     android:textStyle="bold"
                     android:textColor="#CE5A67"/>
 
@@ -90,8 +94,9 @@
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textColor="#1F1717"
+                    android:fontFamily="serif"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="24dp"/>
 
@@ -101,6 +106,7 @@
                     android:layout_height="wrap_content"
                     android:text="Ingredients"
                     android:textSize="17sp"
+                    android:fontFamily="serif"
                     android:textStyle="bold"
                     android:textColor="#CE5A67"/>
 
@@ -109,6 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:fontFamily="serif"
                     android:layout_marginBottom="24dp"
                     android:background="#FCF5ED"
                     android:padding="16dp"/>
@@ -118,9 +125,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Category"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:textColor="#CE5A67"
+                    android:fontFamily="serif"
                     android:layout_marginBottom="12dp"/>
 
                 <TextView

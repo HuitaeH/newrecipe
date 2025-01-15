@@ -46,20 +46,18 @@ class RecipeDetailFragment : Fragment() {
         // 샘플 데이터
         val recipe = RecipeDetail(
             id = 1,
-            title = "스파이시 프라이드 치킨",
-            imageUrl = "sample_url",
-            totalTime = 45,
-            cookingTime = 30,
-            description = "바삭바삭하고 매콤한 치킨 레시피입니다.",
+            title = "Spiced Fried Chicken",
+            imageResId = R.drawable.chicken,
+            totalTime = 20,
+            description = "Spiced Fried Chicken is crispy, golden chicken seasoned with flavorful spices. It’s juicy inside, crunchy outside, and delicious to eat!",
             ingredients = listOf(
-                RecipeIngredient("닭", "1마리"),
-                RecipeIngredient("튀김가루", "2컵"),
-                RecipeIngredient("우유", "1컵"),
-                RecipeIngredient("고추가루", "2큰술")
+                RecipeIngredient("Chicken", "1"),
+                RecipeIngredient("Batter mix", "2 cups"),
+                RecipeIngredient("Milk", "1 cup"),
+                RecipeIngredient("Chilli powder", "2 tsp")
             ),
-            category = "다이어트"
+            category = "Diet"
         )
-
         updateUI(recipe)
     }
 
@@ -69,13 +67,10 @@ class RecipeDetailFragment : Fragment() {
             totalTime.text = "${recipe.totalTime}min"
             description.text = recipe.description
             ingredientsAdapter.submitList(recipe.ingredients)
+            recipeImage.setImageResource(recipe.imageResId)
+            categoryTag.text = recipe.category
 
-            categoryTag.text = recipe.category  // 선택된 하나의 카테고리만 텍스트로 표시
 
-            // Glide로 이미지 로드
-            Glide.with(this@RecipeDetailFragment)
-                .load(recipe.imageUrl)
-                .into(recipeImage)
         }
     }
 

@@ -1,10 +1,13 @@
 package com.example.recipee
 
+import Adapter.RecipeAdapter
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Toast
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -16,6 +19,8 @@ import com.google.firebase.Timestamp
 import android.widget.TextView
 import android.widget.ImageView
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import datas.Recipe
 import java.util.*
@@ -29,10 +34,46 @@ class ProfileFragment : Fragment(R.layout.profile_activity) {
     private val storageRef: StorageReference = storage.reference
     private val PICK_IMAGE_REQUEST = 1
     private var selectedImageUri: Uri? = null
-    private val bookmarkedRecipes = mutableListOf<Recipe>()
+    private val bookmarkedRecipes = listOf( // 더미 데이터로 북마크된 레시피 정의
+        Recipe(
+            id = 1,
+            title = "Creamy Garlic Pasta",
+            cookingTime = 20,
+            category = "vegan",
+            authorName = "Minji",
+            likeCount = 8,
+            imageResId = R.drawable.garlicpasta,
+            profileImageResId = R.drawable.profile2
+        ),
+        Recipe(
+            id = 2,
+            title = "Spiced Fried Chicken",
+            cookingTime = 30,
+            category = "diet",
+            authorName = "Huitae",
+            likeCount = 15,
+            imageResId = R.drawable.chicken,
+            profileImageResId = R.drawable.profile1
+        )
+    )
+    private lateinit var bookmarksAdapter: RecipeAdapter // 어댑터 선언
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // RecyclerView 설정
+        val recyclerView = view.findViewById<RecyclerView>(R.id.bookmarkedRecipesRecyclerView)
+        bookmarksAdapter = RecipeAdapter()
+        recyclerView.apply {
+            adapter = bookmarksAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
+        // View Bookmarks 버튼 클릭 이벤트
+        val viewBookmarksButton = view.findViewById<Button>(R.id.viewBookmarksButton)
+        viewBookmarksButton.setOnClickListener {
+            showBookmarksDialog() // 다이얼로그 호출
+        }
 
         val user = auth.currentUser
         if (user != null) {
@@ -46,6 +87,16 @@ class ProfileFragment : Fragment(R.layout.profile_activity) {
         } else {
             Toast.makeText(requireContext(), "User not signed in!", Toast.LENGTH_SHORT).show()
         }
+
+
+
+    }
+
+    private fun displayBookmarkedRecipes() {
+        // 북마크된 레시피를 RecyclerView에 표시
+        bookmarksAdapter.submitList(bookmarkedRecipes)
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.bookmarkedRecipesRecyclerView)
+        recyclerView?.visibility = View.VISIBLE // RecyclerView를 보이도록 설정
     }
 
     private fun fetchAndDisplayUserProfile(userId: String, view: View) {
@@ -135,4 +186,28 @@ class ProfileFragment : Fragment(R.layout.profile_activity) {
                 Toast.makeText(requireContext(), "Failed to update profile picture.", Toast.LENGTH_SHORT).show()
             }
     }
+
+    private fun showBookmarksDialog() {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_bookmarks, null)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+
+        // RecyclerView 설정
+        val recyclerView = dialogView.findViewById<RecyclerView>(R.id.dialogRecyclerView)
+        recyclerView.apply {
+            adapter = RecipeAdapter().apply { submitList(bookmarkedRecipes) } // 북마크된 레시피 연결
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
+        // 닫기 버튼 클릭 이벤트
+        val closeButton = dialogView.findViewById<Button>(R.id.closeDialogButton)
+        closeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // 다이얼로그 띄우기
+        dialog.show()
+    }
+
 }

@@ -9,10 +9,10 @@ enum class RecipeCategory {
 data class RecipeDetail(
     val id: Long,
     val title: String,
-    val imageUrl: String,
+    val imageResId: Int,
     val totalTime: Int,
-    val cookingTime: Int,
     val description: String,
     val ingredients: List<RecipeIngredient>,
-    val category: String
+    val category: String,
+
 )

@@ -6,17 +6,33 @@
     android:orientation="vertical"
     android:padding="32dp"
     android:gravity="center"
-    android:background="#FCF5ED">  <!-- 배경색 추가 -->
+    android:background="#FCF5ED">
 
-    <!-- 앱 로고/타이틀 -->
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RECIPEE"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:textColor="#CE5A67"
-        android:layout_marginBottom="48dp"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="48dp">
+
+        <!-- 로고 이미지 -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_logo"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="App Logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="RECIPEE"
+            android:textColor="#CE5A67"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- 이메일 입력 필드 -->
     <com.google.android.material.textfield.TextInputLayout
@@ -63,8 +79,9 @@
         android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="LOGIN"
         android:textColor="#FFFFFF"
+
         android:padding="16dp"
         android:textSize="16sp"
         app:cornerRadius="8dp"

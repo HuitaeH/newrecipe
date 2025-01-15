@@ -120,12 +120,15 @@ class PostRecipeActivity : AppCompatActivity() {
                     cookingTime = cookingTime,
                     ingredients = ingredients,
                     authorName = authorName,
-                    authorImageUrl = "",
                     description = description,
                     category = selectedCategory!!,  // 선택된 카테고리 추가
                     isBookmarked = false,
                     uploadTime = Timestamp.now(),
-                    userId = userId
+                    userId = userId,
+                    imageResId = R.drawable.chicken,
+                    profileImageResId = R.drawable.profile1,
+                    likeCount = 0,
+                    isLiked = false
                 )
 
                 // 이미지 업로드 및 Firestore 저장
