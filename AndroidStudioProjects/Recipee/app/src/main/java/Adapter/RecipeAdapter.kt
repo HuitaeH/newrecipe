@@ -58,6 +58,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                 }
                 // Glide를 통해 이미지 로드 등
                 recipeImage.setImageResource(recipe.imageResId)
+                profileImage.setImageResource(recipe.profileImageResId)
 
 
                 // 이미지 로딩은 Glide 또는 Coil 라이브러리 사용 필요
