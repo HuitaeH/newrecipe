@@ -120,7 +120,6 @@ class FridgeFragment : Fragment() {
                                     ingredients = ingredients,
                                     category = category.name,  // Store category as a string in Firestore
                                     authorName = doc.getString("authorName") ?: "",
-                                    authorImageUrl = doc.getString("authorImageUrl") ?: "",
                                     uploadTime = doc.getTimestamp("uploadTime") ?: Timestamp.now(),
                                     isLiked = doc.getBoolean("isLiked") ?: false,
                                     likeCount = doc.getLong("likeCount")?.toInt() ?: 0
