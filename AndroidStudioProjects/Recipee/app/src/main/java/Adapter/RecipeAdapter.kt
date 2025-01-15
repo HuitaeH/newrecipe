@@ -43,8 +43,8 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
                 // 좋아요 버튼 상태 설정
                 likeButton.setImageResource(
-                    if (recipe.isLiked) R.drawable.like
-                    else R.drawable.like
+                    if (recipe.isLiked) R.drawable.filled_like
+                    else R.drawable.like1
                 )
 
                 // 좋아요 수 표시
@@ -57,6 +57,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                     notifyItemChanged(adapterPosition)
                 }
                 // Glide를 통해 이미지 로드 등
+                recipeImage.setImageResource(recipe.imageResId)
 
 
                 // 이미지 로딩은 Glide 또는 Coil 라이브러리 사용 필요
@@ -64,7 +65,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
                 // Glide.with(itemView).load(recipe.authorImageUrl).into(profileImage)
 
                 bookmarkButton.setImageResource(
-                    if (recipe.isBookmarked) R.drawable.ic_bookmark
+                    if (recipe.isBookmarked) R.drawable.filled_bookmark
                     else R.drawable.ic_bookmark
                 )
 

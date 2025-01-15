@@ -1,5 +1,6 @@
 package com.example.recipee
 
+import Adapter.HotRecipeAdapter
 import Adapter.RecipeAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,21 +22,21 @@ import android.util.Log
 import datas.Recipe
 import datas.RecipeIngredient
 import android.widget.TextView
+import com.example.recipee.databinding.FragmentHotBinding
 
 
 class HotFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentHotBinding? = null
     private val binding get() = _binding!!
-    private val recipeAdapter = RecipeAdapter()
+    private val recipeAdapter = HotRecipeAdapter() // 기존 RecipeAdapter를 HotRecipeAdapter로 변경
     private var allRecipes: List<Recipe> = emptyList() // Initialize empty list
-    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHotBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -64,7 +65,10 @@ class HotFragment : Fragment() {
                 cookingTime = 30,
                 authorName = "Huitae",
                 likeCount = 15,
-                category = "diet"
+                category = "diet",
+                imageResId = R.drawable.chicken,
+                profileImageResId = R.drawable.profile1
+
             ),
             Recipe(
                 id = 2,
@@ -72,7 +76,9 @@ class HotFragment : Fragment() {
                 cookingTime = 20,
                 authorName = "Minji",
                 likeCount = 8,
-                category = "vegan"
+                category = "vegan",
+                imageResId = R.drawable.garlicpasta,
+                profileImageResId = R.drawable.profile2
             ),
             Recipe(
                 id = 3,
@@ -80,7 +86,9 @@ class HotFragment : Fragment() {
                 cookingTime = 10,
                 authorName = "Minji",
                 likeCount = 300,
-                category = "health"
+                category = "health",
+                imageResId = R.drawable.sandwich,
+                profileImageResId = R.drawable.ic_logo
             ),
             Recipe(
                 id = 4,
@@ -88,7 +96,9 @@ class HotFragment : Fragment() {
                 cookingTime = 30,
                 authorName = "Jihoon",
                 likeCount = 1,
-                category = "vegan"
+                category = "vegan",
+                imageResId = R.drawable.friedrice,
+                profileImageResId = R.drawable.ic_logo
             ),
             Recipe(
                 id = 5,
@@ -96,7 +106,9 @@ class HotFragment : Fragment() {
                 cookingTime = 10,
                 authorName = "Youngmin",
                 likeCount = 25,
-                category = "health"
+                category = "health",
+                imageResId = R.drawable.onigiri,
+                profileImageResId = R.drawable.ic_logo
             )
         )
 
@@ -123,20 +135,20 @@ class HotFragment : Fragment() {
     }
 }
 
-// Recipe data class with added 'rank' field
-data class Recipe(
-    val userId: String = "",
-    val documentId: String = "",
-    val id: Long = 0,
-    val title: String,
-    val cookingTime: Int,
-    val description: String = "",
-    val ingredients: List<RecipeIngredient> = emptyList(),
-    val category: String,
-    val authorName: String,
-    val authorImageUrl: String? = null,
-    val uploadTime: Timestamp = Timestamp.now(),
-    val isLiked: Boolean = false,
-    val likeCount: Int,
-    val rank: Int? = null // Added rank
-)
+//// Recipe data class with added 'rank' field
+//data class Recipe(
+//    val userId: String = "",
+//    val documentId: String = "",
+//    val id: Long = 0,
+//    val title: String,
+//    val cookingTime: Int,
+//    val description: String = "",
+//    val ingredients: List<RecipeIngredient> = emptyList(),
+//    val category: String,
+//    val authorName: String,
+//    val authorImageUrl: String? = null,
+//    val uploadTime: Timestamp = Timestamp.now(),
+//    val isLiked: Boolean = false,
+//    val likeCount: Int,
+//    val rank: Int? = null // Added rank
+//)

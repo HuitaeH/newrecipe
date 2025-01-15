@@ -74,6 +74,18 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun getImageResId(imageName: String): Int {
+        return when (imageName) {
+            "spiced_fried_chicken" -> R.drawable.chicken
+            "creamy_garlic_pasta" -> R.drawable.garlicpasta
+            "delicious_sandwich" -> R.drawable.sandwich
+            "fried_rice" -> R.drawable.friedrice
+            "spicy_onigiri" -> R.drawable.onigiri
+            else -> R.drawable.ic_home // 기본 이미지
+        }
+    }
+
+
 
     private fun fetchRecipesFromFirestore() {
         // Query the 'users' collection
@@ -127,10 +139,12 @@ class HomeFragment : Fragment() {
                                     ingredients = ingredients,
                                     category = category.name,  // Store category as a string in Firestore
                                     authorName = doc.getString("authorName") ?: "",
-                                    authorImageUrl = doc.getString("authorImageUrl") ?: "",
+                                    profileImageResId = R.drawable.profile1,
+
                                     uploadTime = doc.getTimestamp("uploadTime") ?: Timestamp.now(),
                                     isLiked = doc.getBoolean("isLiked") ?: false,
-                                    likeCount = doc.getLong("likeCount")?.toInt() ?: 0
+                                    likeCount = doc.getLong("likeCount")?.toInt() ?: 0,
+                                    imageResId = getImageResId(doc.getString("imageName") ?: "default_image")
                                 )
                             }
 
@@ -161,7 +175,9 @@ class HomeFragment : Fragment() {
                 cookingTime = 30,
                 authorName = "Huitae",
                 likeCount = 15,
-                category = "diet"
+                category = "diet",
+                imageResId = R.drawable.chicken,
+                profileImageResId = R.drawable.profile1,
             ),
             Recipe(
                 id = 2,
@@ -169,7 +185,9 @@ class HomeFragment : Fragment() {
                 cookingTime = 20,
                 authorName = "Minji",
                 likeCount = 8,
-                category = "vegan"
+                category = "vegan",
+                imageResId = R.drawable.garlicpasta,
+                profileImageResId = R.drawable.profile2,
             ),
             Recipe(
                 id = 3,
@@ -177,7 +195,9 @@ class HomeFragment : Fragment() {
                 cookingTime = 10,
                 authorName = "Minji",
                 likeCount = 300,
-                category = "health"
+                category = "health",
+                imageResId = R.drawable.sandwich,
+                profileImageResId = R.drawable.ic_logo,
             ),
             Recipe(
                 id = 4,
@@ -185,7 +205,10 @@ class HomeFragment : Fragment() {
                 cookingTime = 30,
                 authorName = "Jihoon",
                 likeCount = 1,
-                category = "vegan"
+                category = "vegan",
+                imageResId = R.drawable.friedrice,
+                profileImageResId = R.drawable.ic_logo,
+
             ),
             Recipe(
                 id = 5,
@@ -193,7 +216,10 @@ class HomeFragment : Fragment() {
                 cookingTime = 10,
                 authorName = "Youngmin",
                 likeCount = 25,
-                category = "health"
+                category = "health",
+                imageResId = R.drawable.onigiri,
+                profileImageResId = R.drawable.ic_logo,
+
             )
         )
         recipeAdapter.submitList(allRecipes)

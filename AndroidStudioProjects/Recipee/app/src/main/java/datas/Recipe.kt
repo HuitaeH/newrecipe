@@ -14,11 +14,12 @@ data class Recipe(
     var ingredients: List<RecipeIngredient> = emptyList(),  // Using RecipeIngredient here
     val category: String,  // Using RecipeCategory here
     var authorName: String = "",
-    var authorImageUrl: String = "",
     var isBookmarked: Boolean = false, //delete this!!!
     var uploadTime: Timestamp = Timestamp.now(),
     var isLiked: Boolean = false,
-    var likeCount: Int = 0
+    var likeCount: Int = 0,
+    val imageResId: Int,
+    val profileImageResId: Int,
 ) {
     val categoryEnum: RecipeCategory
         get() = try {
