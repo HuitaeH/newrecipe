@@ -49,7 +49,7 @@ class HotFragment : Fragment() {
         }
 
         // Set the text in the TextView
-        binding.replacementText.text = "Welcome to Hot Recipes!"
+//        binding.replacementText.text = "Welcome to Hot Recipes!"
 
         // Load sample data with ranking
         loadSampleData()
