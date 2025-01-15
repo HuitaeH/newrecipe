@@ -67,7 +67,13 @@ class HotFragment : Fragment() {
                 likeCount = 15,
                 category = "diet",
                 imageResId = R.drawable.chicken,
-                profileImageResId = R.drawable.profile1
+                profileImageResId = R.drawable.profile1,
+                ingredients = listOf(
+                    RecipeIngredient(name = "Chicken", amount = "1 kg"),
+                    RecipeIngredient(name = "Chili Powder", amount = "2 tbsp"),
+                    RecipeIngredient(name = "Garlic", amount = "3 cloves"),
+                    RecipeIngredient(name = "Salt", amount = "1 tsp")
+                ),
 
             ),
             Recipe(
@@ -78,7 +84,14 @@ class HotFragment : Fragment() {
                 likeCount = 8,
                 category = "vegan",
                 imageResId = R.drawable.garlicpasta,
-                profileImageResId = R.drawable.profile2
+                profileImageResId = R.drawable.profile2,
+                ingredients = listOf(
+                    RecipeIngredient(name = "Pasta", amount = "200 g"),
+                    RecipeIngredient(name = "Garlic", amount = "2 cloves"),
+                    RecipeIngredient(name = "Vegan Cream", amount = "100 ml"),
+                    RecipeIngredient(name = "Olive Oil", amount = "1 tbsp")
+                ),
+
             ),
             Recipe(
                 id = 3,
@@ -88,7 +101,13 @@ class HotFragment : Fragment() {
                 likeCount = 300,
                 category = "health",
                 imageResId = R.drawable.sandwich,
-                profileImageResId = R.drawable.ic_logo
+                profileImageResId = R.drawable.ic_logo,
+                ingredients = listOf(
+                    RecipeIngredient(name = "Bread", amount = "2 slices"),
+                    RecipeIngredient(name = "Lettuce", amount = "2 leaves"),
+                    RecipeIngredient(name = "Tomato", amount = "1 slice"),
+                    RecipeIngredient(name = "Avocado", amount = "1/2")
+                ),
             ),
             Recipe(
                 id = 4,
@@ -98,7 +117,13 @@ class HotFragment : Fragment() {
                 likeCount = 1,
                 category = "vegan",
                 imageResId = R.drawable.friedrice,
-                profileImageResId = R.drawable.ic_logo
+                profileImageResId = R.drawable.ic_logo,
+                ingredients = listOf(
+                    RecipeIngredient(name = "Rice", amount = "1 cup"),
+                    RecipeIngredient(name = "Carrot", amount = "1 medium"),
+                    RecipeIngredient(name = "Peas", amount = "1/2 cup"),
+                    RecipeIngredient(name = "Soy Sauce", amount = "1 tbsp")
+                ),
             ),
             Recipe(
                 id = 5,
@@ -108,7 +133,13 @@ class HotFragment : Fragment() {
                 likeCount = 25,
                 category = "health",
                 imageResId = R.drawable.onigiri,
-                profileImageResId = R.drawable.ic_logo
+                profileImageResId = R.drawable.ic_logo,
+                ingredients = listOf(
+                    RecipeIngredient(name = "Rice", amount = "1 cup"),
+                    RecipeIngredient(name = "Nori", amount = "1 sheet"),
+                    RecipeIngredient(name = "Chili Sauce", amount = "1 tbsp"),
+                    RecipeIngredient(name = "Vinegar", amount = "1 tsp")
+                ),
             )
         )
 

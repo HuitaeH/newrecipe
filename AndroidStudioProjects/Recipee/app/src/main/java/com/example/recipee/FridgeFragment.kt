@@ -122,8 +122,12 @@ class FridgeFragment : Fragment() {
                                     authorName = doc.getString("authorName") ?: "",
                                     uploadTime = doc.getTimestamp("uploadTime") ?: Timestamp.now(),
                                     isLiked = doc.getBoolean("isLiked") ?: false,
-                                    likeCount = doc.getLong("likeCount")?.toInt() ?: 0
+                                    imageResId = getImageResId(doc.getString("imageName") ?: "default_image"),
+                                    likeCount = doc.getLong("likeCount")?.toInt() ?: 0,
+                                    profileImageResId = R.drawable.profile1
+
                                 )
+
                             }
 
                             // Check if recipes are fetched and update UI
@@ -158,7 +162,10 @@ class FridgeFragment : Fragment() {
                     RecipeIngredient(name = "Chili Powder", amount = "2 tbsp"),
                     RecipeIngredient(name = "Garlic", amount = "3 cloves"),
                     RecipeIngredient(name = "Salt", amount = "1 tsp")
-                )
+                ),
+                description = "dd",
+                imageResId = R.drawable.chicken,
+                profileImageResId = R.drawable.profile1,
             ),
             Recipe(
                 id = 2,
@@ -172,7 +179,10 @@ class FridgeFragment : Fragment() {
                     RecipeIngredient(name = "Garlic", amount = "2 cloves"),
                     RecipeIngredient(name = "Vegan Cream", amount = "100 ml"),
                     RecipeIngredient(name = "Olive Oil", amount = "1 tbsp")
-                )
+                ),
+                description = "ee",
+                imageResId = R.drawable.garlicpasta,
+                profileImageResId = R.drawable.profile2,
             ),
             Recipe(
                 id = 3,
@@ -186,7 +196,10 @@ class FridgeFragment : Fragment() {
                     RecipeIngredient(name = "Lettuce", amount = "2 leaves"),
                     RecipeIngredient(name = "Tomato", amount = "1 slice"),
                     RecipeIngredient(name = "Avocado", amount = "1/2")
-                )
+                ),
+                description = "ff",
+                imageResId = R.drawable.sandwich,
+                profileImageResId = R.drawable.ic_logo,
             ),
             Recipe(
                 id = 4,
@@ -200,7 +213,10 @@ class FridgeFragment : Fragment() {
                     RecipeIngredient(name = "Carrot", amount = "1 medium"),
                     RecipeIngredient(name = "Peas", amount = "1/2 cup"),
                     RecipeIngredient(name = "Soy Sauce", amount = "1 tbsp")
-                )
+                ),
+                description = "gg",
+                imageResId = R.drawable.friedrice,
+                profileImageResId = R.drawable.ic_logo,
             ),
             Recipe(
                 id = 5,
@@ -214,11 +230,26 @@ class FridgeFragment : Fragment() {
                     RecipeIngredient(name = "Nori", amount = "1 sheet"),
                     RecipeIngredient(name = "Chili Sauce", amount = "1 tbsp"),
                     RecipeIngredient(name = "Vinegar", amount = "1 tsp")
-                )
+                ),
+                description = "hh",
+                imageResId = R.drawable.onigiri,
+                profileImageResId = R.drawable.ic_logo,
             )
         )
         recipeAdapter.submitList(allRecipes)
     }
+
+    private fun getImageResId(imageName: String): Int {
+        return when (imageName) {
+            "spiced_fried_chicken" -> R.drawable.chicken
+            "creamy_garlic_pasta" -> R.drawable.garlicpasta
+            "delicious_sandwich" -> R.drawable.sandwich
+            "fried_rice" -> R.drawable.friedrice
+            "spicy_onigiri" -> R.drawable.onigiri
+            else -> R.drawable.ic_logo // 기본 이미지
+        }
+    }
+
 
 
     private fun filterRecipesByIngredients(query: String) {
