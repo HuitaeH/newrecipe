@@ -16,10 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RECIPEE"
-        android:textSize="16.8sp"
+        android:textSize="30sp"
         android:visibility="gone"
         android:layout_toEndOf="@id/ic_utensil"
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="-20dp"
         android:layout_centerVertical="true" />
 
 </RelativeLayout>
