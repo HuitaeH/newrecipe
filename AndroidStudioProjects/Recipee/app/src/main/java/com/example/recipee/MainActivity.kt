@@ -46,6 +46,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_recipe -> {
                     // RecipeFragment로 전환
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, HotFragment())
+                        .commit()
                     true
                 }
                 R.id.navigation_community -> {

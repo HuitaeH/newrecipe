@@ -117,7 +117,6 @@ class PostRecipeActivity : AppCompatActivity() {
                 val recipe = Recipe(
                     id = System.currentTimeMillis(),
                     title = title,
-                    imageUrl = "",
                     cookingTime = cookingTime,
                     ingredients = ingredients,
                     authorName = authorName,
@@ -133,7 +132,6 @@ class PostRecipeActivity : AppCompatActivity() {
                 if (selectedImageUri != null) { // 이미지가 선택된 경우
                     uploadRecipeImage(selectedImageUri!!) { imageUrl ->
                         if (imageUrl != null) {
-                            recipe.imageUrl = imageUrl // 업로드된 이미지 URL 설정
                             saveRecipeToFirestore(recipe, userId) // Firestore에 저장
                             Toast.makeText(this, "Recipe posted with image!", Toast.LENGTH_SHORT).show()
                         } else {
@@ -160,6 +158,7 @@ class PostRecipeActivity : AppCompatActivity() {
             finish()
         }
     }
+
 
     fun saveRecipeToFirestore(recipe: Recipe, userId: String) {
         val db = FirebaseFirestore.getInstance()

@@ -57,13 +57,13 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-//        // 샘플 데이터 로드
-//        loadSampleData()
-//        // 검색 기능 추가
-//        binding.searchEditText.addTextChangedListener { text ->
-//            val query = text.toString().trim()
-//            filterRecipes(query)
-//        }
+        // 샘플 데이터 로드
+        loadSampleData()
+        // 검색 기능 추가
+        binding.searchEditText.addTextChangedListener { text ->
+            val query = text.toString().trim()
+            filterRecipes(query)
+        }
         // Fetch recipes from Firestore
         fetchRecipesFromFirestore()
 
@@ -102,7 +102,6 @@ class HomeFragment : Fragment() {
                             val recipeList = recipesSnapshot.documents.mapNotNull { doc ->
                                 // Get values from the recipe document
                                 val title = doc.getString("title") ?: ""
-                                val imageUrl = doc.getString("imageUrl") ?: ""
                                 val cookingTime = (doc.getLong("cookingTime") ?: 0).toInt()
                                 val userId = doc.getString("userId") ?: ""
                                 val description = doc.getString("description") ?: ""
@@ -123,7 +122,6 @@ class HomeFragment : Fragment() {
                                     documentId = doc.id,
                                     id = doc.id.toLong(),  // Use Firestore document ID as the recipe ID
                                     title = title,
-                                    imageUrl = imageUrl,
                                     cookingTime = cookingTime,
                                     description = description,
                                     ingredients = ingredients,
@@ -155,39 +153,51 @@ class HomeFragment : Fragment() {
     }
 
 
-
-
-
-
-//    private fun loadSampleData() {
-//            allRecipes = listOf(
-//            Recipe(
-//                id = 1,
-//                title = "Spiced Fried Chicken",
-//                imageUrl = "sample_url",
-//                cookingTime = 30,
-//                authorName = "Huitae",
-//                authorImageUrl = "profile_url",
-//                badge = "beginner",
-//                likeCount = 15,
-//                isLiked = true,
-//                category = "diet"
-//            ),
-//            Recipe(
-//                id = 2,
-//                title = "Creamy Garlic Pasta",
-//                imageUrl = "sample_url",
-//                cookingTime = 20,
-//                authorName = "Minji",
-//                authorImageUrl = "profile_url",
-//                badge = "intermediate",
-//                likeCount = 8,
-//                isLiked = false,
-//                category = "vegan"
-//            )
-//        )
-//        recipeAdapter.submitList(allRecipes)
-//    }
+    private fun loadSampleData() {
+            allRecipes = listOf(
+            Recipe(
+                id = 1,
+                title = "Spiced Fried Chicken",
+                cookingTime = 30,
+                authorName = "Huitae",
+                likeCount = 15,
+                category = "diet"
+            ),
+            Recipe(
+                id = 2,
+                title = "Creamy Garlic Pasta",
+                cookingTime = 20,
+                authorName = "Minji",
+                likeCount = 8,
+                category = "vegan"
+            ),
+            Recipe(
+                id = 3,
+                title = "Delicious Sandwich",
+                cookingTime = 10,
+                authorName = "Minji",
+                likeCount = 300,
+                category = "health"
+            ),
+            Recipe(
+                id = 4,
+                title = "Fried Rice with Vegetables",
+                cookingTime = 30,
+                authorName = "Jihoon",
+                likeCount = 1,
+                category = "vegan"
+            ),
+            Recipe(
+                id = 5,
+                title = "Spicy and Sour Onigiri",
+                cookingTime = 10,
+                authorName = "Youngmin",
+                likeCount = 25,
+                category = "health"
+            )
+        )
+        recipeAdapter.submitList(allRecipes)
+    }
 
     private fun filterRecipes(query: String) {
         val filteredRecipes = if (query.isEmpty()) {

@@ -37,7 +37,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
         fun bind(recipe: Recipe) {
             with(binding) {
                 recipeTitle.text = recipe.title
-                recipeBadge.text = recipe.badge
+//                recipeBadge.text = recipe.badge
                 recipeTime.text = "${recipe.cookingTime} min"
                 authorName.text = recipe.authorName
 
