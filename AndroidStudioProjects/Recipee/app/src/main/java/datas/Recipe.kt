@@ -11,7 +11,7 @@ data class Recipe(
     var title: String = "",
     var cookingTime: Int = 0,
     var description: String = "",
-    var ingredients: List<RecipeIngredient> = emptyList(),  // Using RecipeIngredient here
+    var ingredients: List<RecipeIngredient>,  // Using RecipeIngredient here
     val category: String,  // Using RecipeCategory here
     var authorName: String = "",
     var isBookmarked: Boolean = false, //delete this!!!

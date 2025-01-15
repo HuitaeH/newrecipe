@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import datas.Recipe
+import datas.RecipeIngredient
 import java.util.*
 import datas.UserProfile
 
@@ -43,7 +44,14 @@ class ProfileFragment : Fragment(R.layout.profile_activity) {
             authorName = "Minji",
             likeCount = 8,
             imageResId = R.drawable.garlicpasta,
-            profileImageResId = R.drawable.profile2
+            profileImageResId = R.drawable.profile2,
+            ingredients = listOf(
+                RecipeIngredient(name = "Pasta", amount = "200 g"),
+                RecipeIngredient(name = "Garlic", amount = "2 cloves"),
+                RecipeIngredient(name = "Vegan Cream", amount = "100 ml"),
+                RecipeIngredient(name = "Olive Oil", amount = "1 tbsp")
+            ),
+
         ),
         Recipe(
             id = 2,
@@ -53,7 +61,13 @@ class ProfileFragment : Fragment(R.layout.profile_activity) {
             authorName = "Huitae",
             likeCount = 15,
             imageResId = R.drawable.chicken,
-            profileImageResId = R.drawable.profile1
+            profileImageResId = R.drawable.profile1,
+            ingredients = listOf(
+                RecipeIngredient(name = "Chicken", amount = "1 kg"),
+                RecipeIngredient(name = "Chili Powder", amount = "2 tbsp"),
+                RecipeIngredient(name = "Garlic", amount = "3 cloves"),
+                RecipeIngredient(name = "Salt", amount = "1 tsp")
+            ),
         )
     )
     private lateinit var bookmarksAdapter: RecipeAdapter // 어댑터 선언
